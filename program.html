@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Programs - AUK</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="AUK Logo" class="logo">
+        </div>
+        <nav class="main-header">
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html#about">About Us</a></li>
+                <li><a href="program.html">Programs</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="member_registration.html">Member Registration</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <section class="program-announcement">
+        <h2>Program Announcements</h2>
+        <p>Stay updated with our latest programs and events. We have various activities scheduled every two weeks, so make sure to check this section regularly for updates.</p>
+    </section>
+
+    <section class="program-calendar">
+        <h2>Event Calendar</h2>
+        <div id="calendar"></div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="news-blog">
+        <h2>News & Blogs</h2>
+        <div class="blog-posts">
+            <article class="blog-post">
+                <h3>Community News #1</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/@gmnethiopia"
+                        title="YouTube video" frameborder="0" allow="accelerometer; autoplay;
+                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>Stay tuned for the latest updates in our community and programs.</p>
+                <a href="https://www.youtube.com/@gmnethiopia" target="_blank">Watch on YouTube</a>
+            </article>
+
+            <article class="blog-post">
+                <h3>Community News #2</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/your-video-id-2"
+                        title="YouTube video" frameborder="0" allow="accelerometer; autoplay;
+                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>Check out our recent blog post about upcoming events and activities.</p>
+                <a href="https://www.youtube.com/watch?v=your-video-id-2" target="_blank">Watch on YouTube</a>
+            </article>
+
+            <!-- Add more blog posts as needed -->
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="social-media-icons">
+        <a href="https://www.facebook.com" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://telegram.org" target="_blank">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank">
+            <i class="fa-brands fa-x-twitter"></i>
+        </a>
+    </div>
+    <p>&copy; 2024 Amhara Union in Kentucky. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // JavaScript for dynamic calendar remains the same
+    const calendarElement = document.getElementById("calendar");
+
+    function generateCalendar(month, year) {
+        const firstDay = new Date(year, month).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+
+        let firstMeetingDay = new Date(year, month, 1);
+        while (firstMeetingDay.getDay() !== 0) {
+            firstMeetingDay.setDate(firstMeetingDay.getDate() + 1);
+        }
+
+        let secondMeetingDay = new Date(firstMeetingDay);
+        secondMeetingDay.setDate(secondMeetingDay.getDate() + 14);
+
+        let calendarHTML = `<div class="month">
+            <ul>
+                <li class="prev" onclick="prevMonth()">&#10094;</li>
+                <li class="next" onclick="nextMonth()">&#10095;</li>
+                <li>
+                    ${today.toLocaleString('default', { month: 'long' })} <br>
+                    <span style="font-size:18px">${year}</span>
+                </li>
+            </ul>
+        </div>
+        <ul class="weekdays">
+            <li>Sun</li>
+            <li>Mon</li>
+            <li>Tue</li>
+            <li>Wed</li>
+            <li>Thu</li>
+            <li>Fri</li>
+            <li>Sat</li>
+        </ul>
+        <ul class="days">`;
+
+        for (let i = 0; i < firstDay; i++) {
+            calendarHTML += "<li></li>";
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            let dayClass = "";
+            let currentDate = new Date(year, month, day);
+
+            if (currentDate.getTime() === firstMeetingDay.getTime() || currentDate.getTime() === secondMeetingDay.getTime()) {
+                dayClass = "meeting-day";
+            }
+
+            calendarHTML += `<li class="${dayClass}">${day}</li>`;
+        }
+
+        calendarHTML += "</ul>";
+        calendarElement.innerHTML = calendarHTML;
+    }
+
+    function nextMonth() {
+        currentMonth = (currentMonth + 1) % 12;
+        currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
+        generateCalendar(currentMonth, currentYear);
+    }
+
+    function prevMonth() {
+        currentMonth = (currentMonth === 0 ? 11 : currentMonth - 1);
+        currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+        generateCalendar(currentMonth, currentYear);
+    }
+
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    generateCalendar(currentMonth, currentYear);
+
+</script>
+
+</body>
+</html>
